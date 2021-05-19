@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+    <!-- <link rel="icon" href="favicon. png" sizes="16x16" type="image/png"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon (4).ico" sizes="16x16" type="image/png"> 
+    <title>My Quotes</title>
+</head>
+<body>
+    <div class="box">
+        <div class="inner-box-first">
+            <div class="inner-box-sec1">
+                <div id="quotes"></div>
+                <div id="author"></div>
+            </div>
+            <div class="inner-box-sec2">
+                <button type="button" class="btn btn-info" id="nQuotes"><i class="fas fa-retweet"></i>new Quotes</button>
+                <button type="button" class="btn btn-dark" id="tweet"><i class="fas fa-external-link-alt"></i>Share</button>
+            </div>
+        </div>
+    </div>
+  
+    <script>
+        const q=document.getElementById("quotes");
+        const a=document.getElementById("author");
+        const nQueue=document.getElementById("nQuotes");
+       const tweet=document.getElementById("tweet");
+        let  realData="";
+        let quoteData=""; 
+        const tweetNow=()=>{
+            let tweetPost=`https://wa.me/?text=${quotesData.text}`;
+            window.open(tweetPost);
+        }
+
+         
+        const getNewQuotes=()=>{
+            let randomNum=Math.floor(Math.random()*1600);
+            console.log(randomNum);
+            quotesData=realData[randomNum];
+            q.innerText=`${realData[randomNum].text}`;
+            if(realData[randomNum].author==null){
+                a.innerText="Unknown";
+            }
+            else{
+                a.innerText=`${realData[randomNum].author}`;
+            }
+           
+        }
+        const getQuotes=async()=>{
+            const api="https://type.fit/api/quotes";
+            try{
+          
+                let data=await fetch(api);
+                realData=await data.json();
+             getNewQuotes();
+            }
+            catch(error){
+
+            }
+        };
+        tweet.addEventListener("click", tweetNow);
+        nQueue.addEventListener("click", getNewQuotes);
+        getQuotes();
+    </script>
+</body>
+</html>
